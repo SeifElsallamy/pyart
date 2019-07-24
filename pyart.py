@@ -160,7 +160,7 @@ for wtvr in range(randint(1,3)):
             
             if u == 0:
                 #w.create_oval(x1, y1, x2, y2, fill=color(randc1,randc2), outline=color(randc1,randc2))
-                draw.ellipse((x1, y1, x2, y2), fill=color(randc1), outline=color(randc2))
+                draw.ellipse((x1, y1, x2, y2), fill=color(randc1,randc2), outline=color(randc1,randc2))
             elif u == 1:
                 #w.create_oval(x1, y1, x2, y2, outline=color(randc1,randc2))
                 draw.ellipse((x1, y1, x2, y2), outline=color(randc1,randc2))
