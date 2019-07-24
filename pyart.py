@@ -1,6 +1,16 @@
-from Tkinter import *
+#from Tkinter import *
 from random import randint 
+from PIL import Image, ImageDraw
+import datetime
 
+basename = "img"
+suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
+filename = "_".join([basename, suffix])+".jpg" # e.g. 'mylogfile_120508_171442'
+
+height_input=500
+width_input=500
+image = Image.new("RGB", (width_input, height_input), "white")
+draw = ImageDraw.Draw(image)
 colors = []
 colorsY = []
 
@@ -20,7 +30,7 @@ def randfact3():
     else:
         return 1
 
-
+    
 def color(rand1 , rand2):
     global colors
     n = randint(0,rand1)
@@ -30,6 +40,7 @@ def color(rand1 , rand2):
     else:
         r = lambda: randint(0,255)
         c = ('#%02X%02X%02X' % (r(),r(),r()))
+        
         colors.append(c)
 
         if p != 0 and len(colors):
@@ -83,11 +94,11 @@ def point(l,w, rand1 , rand2, rand3 , rand4, rand5):
     
     
 
-master = Tk()
-master.title("Points")
-w = Canvas(master,width=500,height=500)
-w.configure(background="white")
-w.pack(expand=YES, fill=BOTH)
+#master = Tk()
+#master.title("Points")
+#w = Canvas(master,width=width_input,height=height_input)
+#w.configure(background="white")
+#w.pack(expand=YES, fill=BOTH)
 
 for wtvr in range(randint(1,3)):
     n=randint(0,3)
@@ -107,55 +118,67 @@ for wtvr in range(randint(1,3)):
 
     nn = randint(0,20) 
     if nn == 0:
-        for ii in range(500):
-            for i in range(500):
+        for ii in range(width_input):
+            for i in range(width_input):
                 x1, y1 = i, ii
                 x2, y2 = i+1, ii
-                w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                #w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                draw.line((x1, y1, x2, y2), fill=color(randc1,randc2))
         
 
     elif nn == 1:
         if n == 0:
-            for ii in range(500):
-                for i in range(500):
+            for ii in range(width_input):
+                for i in range(width_input):
                     x1, y1 = ii, i
                     x2, y2 = ii, i+1
-                    w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                    #w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                    draw.line((x1, y1, x2, y2), fill=color(randc1,randc2))
+                    
     elif nn == 2:
         if n == 0:
-            for ii in range(500):
-                for i in range(500):
+            for ii in range(width_input):
+                for i in range(width_input):
                     if i == 250:
                         x1, y1 = i+1, ii
                         x2, y2 = ii, i+1
-                        w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                        #w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                        draw.line((x1, y1, x2, y2), fill=color(randc1,randc2))
                     else:
                         x1, y1 = i-1, ii
                         x2, y2 = ii, i-1
-                        w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                        #w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                        draw.line((x1, y1, x2, y2), fill=color(randc1,randc2))
 
 
     else:
         u = randint(0,15)
         for i in range(100000):
-            p=point(500,500, rand1 , rand2, rand3, rand4, rand5)
+            p=point(width_input,width_input, rand1 , rand2, rand3, rand4, rand5)
             x1, y1 = p[0], p[1]
             x2, y2 = p[2], p[3]
             
             if u == 0:
-                w.create_oval(x1, y1, x2, y2, fill=color(randc1,randc2), outline=color(randc1,randc2))
+                #w.create_oval(x1, y1, x2, y2, fill=color(randc1,randc2), outline=color(randc1,randc2))
+                draw.ellipse((x1, y1, x2, y2), fill=color(randc1), outline=color(randc2))
             elif u == 1:
-                w.create_oval(x1, y1, x2, y2, outline=color(randc1,randc2))
+                #w.create_oval(x1, y1, x2, y2, outline=color(randc1,randc2))
+                draw.ellipse((x1, y1, x2, y2), outline=color(randc1,randc2))
             elif u == 2:
-                w.create_rectangle(x1, y1, x2, y2, fill=color(randc1,randc2), outline=color(randc1,randc2))
+                #w.create_rectangle(x1, y1, x2, y2, fill=color(randc1,randc2), outline=color(randc1,randc2))
+                draw.rectangle((x1, y1, x2, y2), fill=color(randc1, randc2), outline=color(randc1,randc2))
             elif u == 3:
-                w.create_rectangle(x1, y1, x2, y2, outline=color(randc1,randc2))
+                #w.create_rectangle(x1, y1, x2, y2, outline=color(randc1,randc2))
+                draw.rectangle((x1, y1, x2, y2), outline=color(randc1,randc2))
             else:
-                w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
-            
+                #w.create_line(x1, y1, x2, y2, fill=color(randc1,randc2))
+                draw.line((x1, y1, x2, y2), fill=color(randc1,randc2))
+print "Image saved as "+filename
+image.show()
+image.save(filename)
 
 
-mainloop()
+#mainloop()
 
 #master.mainloop()
 
